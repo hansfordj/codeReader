@@ -1,0 +1,73 @@
+
+{% extends 'layout.html' %}
+
+{% block body %}
+
+<script type=text/javascript>
+  $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+</script>
+
+<script type=text/javascript>
+
+  function get_log_data() {
+
+      $.getJSON($SCRIPT_ROOT + '/_get_json_logs',
+	  function(data) {
+        console.log("Log Data Updated");
+		$('#logs_table').empty();
+		$.each(data, function(i, item) {
+        $('<tr>').append(
+            $('<td>').text(item.id),
+            $('<td>').text(item.codeid),
+            $('<td>').text(item.timestamp),
+			$('<td>').text(item.match)
+        ).appendTo('#logs_table');});
+      });
+      
+
+  };
+  
+  $(document).ready(get_log_data);
+  setInterval(get_log_data, 5000);
+  
+</script>
+
+<h1>jQuery Logs</h1>
+
+<table class="table" id="logs_table" >
+ <thead class="thead-dark">
+    <tr>
+        <th>ID</th>
+        <th>Code ID</th>
+        <th>Timestamp</th>
+		<th>Match</th>
+    </tr>
+	</thead>
+</table>
+
+<h2>Logs    </h2> 	
+
+<table class="table">
+	<thead class="thead-dark">
+		<tr>
+			<th>ID</th>
+			<th>Code ID</th>
+			<th>Timestamp</th>
+			<th>Match</th>
+
+		</tr>
+	</thead>
+
+	{% for log in  logList %}
+	<tr>
+		<td>{{ log.id }} </td>
+		<td>{{ log.codeid }} </td>
+		<td>{{ log.timestamp }} </td>
+		<td>{{ log.match }} </td>
+	
+	</tr>
+	{% endfor %}
+  
+</table>
+
+{% endblock %} 

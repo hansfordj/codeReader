@@ -1,0 +1,45 @@
+
+{% extends 'layout.html' %}
+
+{% block body %}
+<h2>Code Table     </h2> 	
+<a href="{{ url_for('select_code_from_image') }}"> <span class="badge badge-primary">Select Code</span></a> 
+<a href="{{ url_for('add_code') }}"><span class="badge badge-primary">Add Code</span></a>
+
+
+<table class="table">
+	<thead class="thead-dark">
+		<tr>
+			<th>ID</th>
+			<th>Code Type</th>
+			<th>Data</th>
+			<th>Selected</th>
+
+		</tr>
+	</thead>
+
+
+	{% for code in  codeList %}
+	<tr>
+		<td>{{ code.id }} </td>
+		<td>{{ code.codeType }} </td>
+		<td>{{ code.codeData }} </td>
+		<td> 
+			{% if code.selection == 1 %}
+				Y
+			{% else %}
+				X
+			{% endif %}
+		</td>
+	
+	</tr>
+	{% endfor %}
+  
+</table>
+
+
+
+
+
+
+{% endblock %}

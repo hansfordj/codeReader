@@ -1,0 +1,70 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+
+<!--
+<script>
+function addCode() {
+
+   var xhttp = new XMLHttpRequest();
+   xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        console.log("SUCCESS")
+       }
+     };
+
+   xhttp.open("POST", "/add", true);
+   xhttp.send();
+}
+</script>
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
+<script type="text/javascript" charset="utf-8">
+	
+    var socket = io.connect('http://' + document.domain + ':' + location.port);
+    socket.on('connect', function() {
+        socket.emit('my event', {data: 'I\'m connected!'});
+    });
+</script>
+-->
+
+<h2> Current Selection: {{ selection }} </h2>
+	
+<a href="{{ url_for('select_code_from_image') }}"> <span class="badge badge-primary">Select Code</span></a> 
+<a href="{{ url_for('add_code') }}"><span class="badge badge-primary">Add Code</span></a>
+
+
+<table class="table">
+	<thead class="thead-dark">
+		<tr>
+			<th>ID</th>
+			<th>Code Type</th>
+			<th>Data</th>
+			<th>Selected</th>
+
+		</tr>
+	</thead>
+
+
+	{% for code in  codeList %}
+	<tr>
+		<td>{{ code.id }} </td>
+		<td>{{ code.codeType }} </td>
+		<td>{{ code.codeData }} </td>
+		<td> 
+			{% if code.selection == 1 %}
+				Y
+			{% else %}
+				X
+			{% endif %}
+		</td>
+	
+	</tr>
+	{% endfor %}
+  
+</table>
+
+
+
+
+{% endblock %}
